@@ -1,0 +1,11 @@
+msgid ""
+msgstr ""
+
+msgid "Display as a PhotoSphere"
+msgstr "Afficher en PhotoSphère"
+
+msgid "Select an image to display as a PhotoSphere."
+msgstr "Sélectionnez une image à afficher en PhotoSphère."
+
+msgid "Adds a button to easily insert a PhotoSphere inside a post"
+msgstr "Ajoute un bouton pour facilement insérer une PhotoSphère dans un billet'
