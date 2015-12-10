@@ -11,7 +11,7 @@ class dotsphereBehaviors {
 	public static function postHeaders() {
 		global $core;
 		return
-		'<script type="text/javascript" src="index.php?pf=dotsphere/js/post.js"></script>'.
+		'<script type="text/javascript" src="index.php?pf=dotsphere/js/post.min.js"></script>'.
 		'<script type="text/javascript">'."\n".
 		"//<![CDATA[\n".
 		dcPage::jsVar('jsToolBar.prototype.elements.dotsphere.title',__('Display as a PhotoSphere')).
