@@ -1,4 +1,4 @@
-goog.provide('dotsphere.Button');
+var dotsphere = dotsphere || {};
 
 
 
@@ -6,9 +6,10 @@ goog.provide('dotsphere.Button');
  * A button in the tool bar to replace a selected image by some code to display
  * a Photo Sphere Viewer for that image.
  * @extends {jsToolBar.Button}
+ * @private
  * @constructor
  */
-dotsphere.Button = function() {
+dotsphere.Button_ = function() {
   this.type = 'button';
   this.context = 'post';
   this.icon = 'index.php?pf=dotsphere/icon.png';
@@ -20,7 +21,7 @@ dotsphere.Button = function() {
 /**
  * A functor to handle a click on the dotsphere button.
  * @extends {jsToolBar.ButtonFunction}
- * @param {!dotsphere.Button} button the button that is clicked.
+ * @param {!dotsphere.Button_} button the button that is clicked.
  * @private
  * @constructor
  */
@@ -44,7 +45,7 @@ dotsphere.ButtonClick_ = function(button) {
  * @return {string} The string with the XML special chars replaced.
  * @private
  */
-dotsphere.Button.replaceXmlEntities_ = function(s) {
+dotsphere.Button_.replaceXmlEntities_ = function(s) {
   return s.replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
@@ -57,7 +58,7 @@ dotsphere.Button.replaceXmlEntities_ = function(s) {
  * group is the image's source.
  * @const @private {!RegExp}
  */
-dotsphere.Button.MATCH_WIKI_IMAGE_RE_ =
+dotsphere.Button_.MATCH_WIKI_IMAGE_RE_ =
     /^\s*\(\(([^()|]+)(\|[^()]*)\)\)\s*$/;
 
 
@@ -66,7 +67,7 @@ dotsphere.Button.MATCH_WIKI_IMAGE_RE_ =
  * group is the image's source.
  * @const @private {!RegExp}
  */
-dotsphere.Button.MATCH_XHTML_IMAGE_RE_ =
+dotsphere.Button_.MATCH_XHTML_IMAGE_RE_ =
     /^\s*<img (?:[^>]* )?src=["']([^"'>]+)["'](?: [^>]*)?>\s*$/;
 
 
@@ -77,7 +78,7 @@ dotsphere.Button.MATCH_XHTML_IMAGE_RE_ =
  * @return {?string} The image's source or null if it wasn't an image.
  * @private
  */
-dotsphere.Button.prototype.extractImageSource_ = function(sel, regexp) {
+dotsphere.Button_.prototype.extractImageSource_ = function(sel, regexp) {
   var matchImage = sel.match(regexp);
   if (!matchImage) {
     alert(this.selectImageError);
@@ -94,13 +95,16 @@ dotsphere.Button.prototype.extractImageSource_ = function(sel, regexp) {
  * @param {boolean} wiki Whether this is using wiki syntax or XHTML.
  * @return {string} The text to replace the current selection.
  */
-dotsphere.Button.prototype.replaceSelectionByPhotoSphere = function(sel, wiki) {
+dotsphere.Button_.prototype.replaceSelectionByPhotoSphere = function(
+    sel, wiki) {
   /** @type {?string} */
   var src;
   if (wiki) {
-    src = this.extractImageSource_(sel, dotsphere.Button.MATCH_WIKI_IMAGE_RE_);
+    src = this.extractImageSource_(
+        sel, dotsphere.Button_.MATCH_WIKI_IMAGE_RE_);
   } else {
-    src = this.extractImageSource_(sel, dotsphere.Button.MATCH_XHTML_IMAGE_RE_);
+    src = this.extractImageSource_(
+        sel, dotsphere.Button_.MATCH_XHTML_IMAGE_RE_);
   }
   if (!src) {
     return sel;
@@ -108,7 +112,7 @@ dotsphere.Button.prototype.replaceSelectionByPhotoSphere = function(sel, wiki) {
 
   var html = '<div class="dotsphere"></div>' +
       '<script src="' +
-      dotsphere.Button.replaceXmlEntities_(
+      dotsphere.Button_.replaceXmlEntities_(
           this.pluginUrl + 'js/photo-sphere-viewer.min.js') +
       '"></script>' +
       '<script>dotsphere({panorama: ' + JSON.stringify(src) + '})</script>';
@@ -121,4 +125,4 @@ dotsphere.Button.prototype.replaceSelectionByPhotoSphere = function(sel, wiki) {
 
 
 // Add the new button to the elements of the toolbar.
-jsToolBar.prototype.elements['dotsphere'] = new dotsphere.Button();
+jsToolBar.prototype.elements['dotsphere'] = new dotsphere.Button_();
