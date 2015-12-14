@@ -60,7 +60,7 @@ dotsphere.Button_.replaceXmlEntities_ = function(s) {
  * @const @private {!RegExp}
  */
 dotsphere.Button_.MATCH_WIKI_IMAGE_RE_ =
-    /^\s*\(\(([^()|]+)(\|[^()]*)\)\)\s*$/;
+    /^\s*\(\(([^()|]+)(?:\|(?:[^)]|\)[^)])*)?\)\)\s*$/;
 
 
 /**
@@ -70,7 +70,7 @@ dotsphere.Button_.MATCH_WIKI_IMAGE_RE_ =
  * @const @private {!RegExp}
  */
 dotsphere.Button_.MATCH_XHTML_IMAGE_RE_ =
-    /^\s*<img (?:[^>]* )?src=["']([^"'>]+)["'](?: [^>]*)?>\s*$/;
+    /^\s*<img (?:[^>]* )?src=["']([^"'>]+)["'](?: [^>]*)?\/>\s*$/i;
 
 
 /**
