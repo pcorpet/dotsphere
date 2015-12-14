@@ -5,7 +5,7 @@ $this->registerModule(
 	/* Name */ 'dotsphere',
 	/* Description */ 'Adds a button to easily insert a PhotoSphere inside a post',
 	/* Author */ 'Pascal Corpet',
-	/* Version */ '0.1',
+	/* Version */ 'dev',
 	array(
 		'type' => 'plugin',
 		'permissions' => 'usage,contentadmin'
