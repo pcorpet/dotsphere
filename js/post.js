@@ -56,6 +56,7 @@ dotsphere.Button_.replaceXmlEntities_ = function(s) {
 /**
  * Regular expression to match an image in Wiki syntax. The first matching
  * group is the image's source.
+ * Matches strings like: "  ((/path/image/foo.png)) "
  * @const @private {!RegExp}
  */
 dotsphere.Button_.MATCH_WIKI_IMAGE_RE_ =
@@ -65,6 +66,7 @@ dotsphere.Button_.MATCH_WIKI_IMAGE_RE_ =
 /**
  * Regular expresion to match an image in XHTML syntax. The first matching
  * group is the image's source.
+ * Matches strings like: "  <img src='/path/image/foo.png'/> "
  * @const @private {!RegExp}
  */
 dotsphere.Button_.MATCH_XHTML_IMAGE_RE_ =
@@ -113,9 +115,12 @@ dotsphere.Button_.prototype.replaceSelectionByPhotoSphere = function(
   var html = '<div class="dotsphere"></div>' +
       '<script src="' +
       dotsphere.Button_.replaceXmlEntities_(
-          this.pluginUrl + 'js/photo-sphere-viewer.min.js') +
+          this.pluginUrl + 'js/public.js') +
       '"></script>' +
-      '<script>dotsphere({panorama: ' + JSON.stringify(src) + '})</script>';
+      '<script>dotsphere(' +
+      '{panorama: ' + JSON.stringify(src) + '},' +
+      JSON.stringify(this.pluginUrl + 'js/') +
+      ')</script>';
 
   if (wiki) {
     return '\n///html\n' + html + '\n///\n';
