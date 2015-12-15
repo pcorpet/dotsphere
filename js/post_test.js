@@ -1,4 +1,3 @@
-'use strict';
 describe('dotsphere', function() {
   var toolBar;
 
@@ -78,30 +77,30 @@ describe('dotsphere', function() {
         spyOn(window, 'alert');
       });
 
-      var alertTests = {
-        'empty': '',
-        'not a wiki image': '/foo/bar.jpg',
-        'more than a wiki image': 'a ((/foo/bar.jpg))',
-      };
-      for (let desc in alertTests) {
+      [
+        {desc: 'empty', sel: ''},
+        {desc: 'not a wiki image', sel: '/foo/bar.jpg'},
+        {desc: 'more than a wiki image', sel: 'a ((/foo/bar.jpg))'},
+      ].forEach(function(test) {
+        var desc = test.desc;
         it('should raises an alert if the selection is ' + desc, function() {
-          var sel = alertTests[desc];
-          expect(updateSelectionFunction(sel)).toEqual(sel);
+          expect(updateSelectionFunction(test.sel)).toEqual(test.sel);
           expect(window.alert).toHaveBeenCalledWith('Select Image Error');
         });
-      }
+      });
 
-      var successTests = {
-        'an image': '((/foo/bar.jpg))',
-        'an image with a title': '((/foo/bar.jpg|My nice title|C))',
-        'an image with parentheses in the title':
-            '((/foo/bar.jpg|My (nice) title|C))',
-        'an image with blanks around': '\n((/foo/bar.jpg)) ',
-      };
-      for (let desc in successTests) {
+      [
+        {desc: 'an image', sel: '((/foo/bar.jpg))'},
+        {desc: 'an image with a title',
+         sel: '((/foo/bar.jpg|My nice title|C))'},
+        {desc: 'an image with parentheses in the title',
+         sel: '((/foo/bar.jpg|My (nice) title|C))'},
+        {desc: 'an image with blanks around', sel: '\n((/foo/bar.jpg)) '},
+      ].forEach(function(test) {
+        var desc = test.desc;
         it('should replace the selection by a dotsphere call if it is ' + desc,
             function() {
-              var newSelection = updateSelectionFunction(successTests[desc]);
+              var newSelection = updateSelectionFunction(test.sel);
               expect(window.alert).not.toHaveBeenCalled();
               expect(newSelection).toMatch('^\n///html\n.*\n///\n$');
               var html = newSelection.substr('\n///html\n'.length);
@@ -109,7 +108,7 @@ describe('dotsphere', function() {
               var dotsphereOptions = expectCallToDotsphere(html);
               expect(dotsphereOptions.panorama).toEqual('/foo/bar.jpg');
             });
-      }
+      });
     });
 
     describe('click in XHTML mode', function() {
@@ -122,37 +121,39 @@ describe('dotsphere', function() {
         spyOn(window, 'alert');
       });
 
-      var alertTests = {
-        'empty': '',
-        'not an XHTML image': '/foo/bar.jpg',
-        'a wiki image': '((/foo/bar.jpg))',
-        'more than an XHTML image': 'a <img src="/foo/bar.jpg"/>',
-      };
-      for (let desc in alertTests) {
+      [
+        {desc: 'empty', sel: ''},
+        {desc: 'not an XHTML image', sel: '/foo/bar.jpg'},
+        {desc: 'a wiki image', sel: '((/foo/bar.jpg))'},
+        {desc: 'more than an XHTML image', sel: 'a <img src="/foo/bar.jpg"/>'},
+      ].forEach(function(test) {
+        var desc = test.desc;
         it('should raises an alert if the selection is ' + desc, function() {
-          var sel = alertTests[desc];
-          expect(updateSelectionFunction(sel)).toEqual(sel);
+          expect(updateSelectionFunction(test.sel)).toEqual(test.sel);
           expect(window.alert).toHaveBeenCalledWith('Select Image Error');
         });
-      }
+      });
 
-      var successTests = {
-        'an image': '<img src="/foo/bar.jpg"/>',
-        'an image with a title':
-            '<img src="/foo/bar.jpg" title="My nice title"/>',
-        'an image with capital tag name': '<IMG SRC="/foo/bar.jpg"/>',
-        'an image using single quotes': "<img src='/foo/bar.jpg'/>",
-        'an image with blanks around': '\n<img src="/foo/bar.jpg"/>',
-      };
-      for (let desc in successTests) {
+      [
+        {desc: 'an image', sel: '<img src="/foo/bar.jpg"/>'},
+        {desc: 'an image with a title',
+         sel: '<img src="/foo/bar.jpg" title="My nice title"/>'},
+        {desc: 'an image with capital tag name',
+         sel: '<IMG SRC="/foo/bar.jpg"/>'},
+        {desc: 'an image using single quotes',
+         sel: "<img src='/foo/bar.jpg'/>"},
+        {desc: 'an image with blanks around',
+         sel: '\n<img src="/foo/bar.jpg"/>'},
+      ].forEach(function(test) {
+        var desc = test.desc;
         it('should replace the selection by a dotsphere call if it is ' + desc,
             function() {
-              var newSelection = updateSelectionFunction(successTests[desc]);
+              var newSelection = updateSelectionFunction(test.sel);
               expect(window.alert).not.toHaveBeenCalled();
               var dotsphereOptions = expectCallToDotsphere(newSelection);
               expect(dotsphereOptions.panorama).toEqual('/foo/bar.jpg');
             });
-      }
+      });
     });
   });
 });
