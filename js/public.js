@@ -15,7 +15,7 @@ var PhotoSphereViewer = PhotoSphereViewer || null;
  */
 var dotsphere = dotsphere || function(opt, path) {
   var allContainers = document.getElementsByClassName('dotsphere');
-  if (allContainers.length == 0) {
+  if (allContainers.length === 0) {
     throw 'dotsphere() called but no container is defined yet.';
   }
   opt.container = allContainers[allContainers.length - 1];
