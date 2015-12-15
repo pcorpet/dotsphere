@@ -26,8 +26,13 @@ sed "s/'dev'/'${VERSION}'/" _define.php > dotsphere/_define.php
 # JavaScript files.
 mkdir dotsphere/js
 ln -s "../../js/public.js" dotsphere/js
-# TODO(lascap): Replace by a compilation step.
-ln -s "../../js/post.min.js" dotsphere/js
+
+CCJS=/usr/bin/ccjs
+if [ -x "${CCJS}" ]; then
+  "${CCJS}" js/post.js --compilation_level=ADVANCED --externs=js/externs.js --use_types_for_optimization --jscomp_warning=\* > dotsphere/js/post.min.js
+else
+  ln -s "../../js/post.js" dotsphere/js/post/min.js
+fi
 
 PSV_FILE="dotsphere/js/photo-sphere-viewer.min.js"
 wget https://cdnjs.cloudflare.com/ajax/libs/three.js/r73/three.min.js -O "${PSV_FILE}"
