@@ -28,8 +28,10 @@ mkdir dotsphere/js
 ln -s "../../js/public.js" dotsphere/js
 # TODO(lascap): Replace by a compilation step.
 ln -s "../../js/post.min.js" dotsphere/js
-# TODO(lascap): Replace by a concat step.
-ln -s "../../js/photo-sphere-viewer.min.js" dotsphere/js
+
+PSV_FILE="dotsphere/js/photo-sphere-viewer.min.js"
+wget https://cdnjs.cloudflare.com/ajax/libs/three.js/r73/three.min.js -O "${PSV_FILE}"
+wget https://raw.githubusercontent.com/mistic100/Photo-Sphere-Viewer/master/dist/photo-sphere-viewer.min.js -O - >> "${PSV_FILE}"
 
 PLUGIN="plugin-dotsphere-${VERSION}.zip"
 rm -f "${PLUGIN}"
