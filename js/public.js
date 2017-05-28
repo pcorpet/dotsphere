@@ -30,7 +30,7 @@ var dotsphere = dotsphere || function(opt, path) {
     script.src = path + 'photo-sphere-viewer.min.js';
     var callback = function() {
       while (dotsphere.delayed.length > 0) {
-        PhotoSphereViewer(dotsphere.delayed.pop());
+        new PhotoSphereViewer(dotsphere.delayed.pop());
       }
     };
     script.onload = callback;
@@ -39,5 +39,5 @@ var dotsphere = dotsphere || function(opt, path) {
     firstScript.parentElement.insertBefore(script, firstScript);
   }
 
-  PhotoSphereViewer(opt);
+  new PhotoSphereViewer(opt);
 };

@@ -112,7 +112,7 @@ dotsphere.Button_.prototype.replaceSelectionByPhotoSphere = function(
     return sel;
   }
 
-  var html = '<div class="dotsphere"></div>' +
+  var html = '<div class="dotsphere" style="height:474px;width:474px"></div>' +
       '<script src="' +
       dotsphere.Button_.replaceXmlEntities_(
           this.pluginUrl + 'js/public.js') +
