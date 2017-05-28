@@ -35,7 +35,7 @@ else
 fi
 
 PSV_FILE="dotsphere/js/photo-sphere-viewer.min.js"
-PSV_REPO="https://raw.githubusercontent.com/JeremyHeleine/Photo-Sphere-Viewer/v2.5/"
+PSV_REPO="https://raw.githubusercontent.com/JeremyHeleine/Photo-Sphere-Viewer/v2.8/"
 wget "${PSV_REPO}three.min.js" -O "${PSV_FILE}"
 wget "${PSV_REPO}photo-sphere-viewer.min.js" -O - >> "${PSV_FILE}"
 
